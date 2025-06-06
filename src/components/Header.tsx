@@ -44,6 +44,8 @@ const styles = StyleSheet.create({
   },
   iconLeft: {
     marginRight: 5,
+    padding: 10,
+    borderRadius: 20,
   },
   title: {
     fontSize: 20,
@@ -52,6 +54,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   iconRight: {
+    padding: 10,
+    borderRadius: 20,
     marginLeft: 'auto',
   },
 });
