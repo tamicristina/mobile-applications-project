@@ -1,29 +1,39 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import { Feather } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-import Header from '../components/Header';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../types/navigation';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+} from "react-native";
+import { Feather } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import Header from "../components/Header";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../types/navigation";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, "Login">;
 
 export function LoginScreen() {
   const navigation = useNavigation<NavigationProp>();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleLogin = () => {
     if (email && password) {
-      navigation.navigate('UserList');
+      navigation.navigate("UserList");
     } else {
-      Alert.alert('Erro', 'Por favor, preencha todos os campos.');
+      Alert.alert("Erro", "Por favor, preencha todos os campos.");
     }
   };
 
   return (
     <View style={styles.container}>
-      <Header title="Acesso" />
+      <SafeAreaView>
+        <Header title="Acesso" />
+      </SafeAreaView>
       <View style={styles.form}>
         <TextInput
           style={styles.input}
@@ -52,7 +62,7 @@ export function LoginScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#222',
+    backgroundColor: "#222",
   },
   form: {
     padding: 20,
@@ -60,22 +70,22 @@ const styles = StyleSheet.create({
   input: {
     height: 50,
     borderBottomWidth: 1,
-    borderBottomColor: '#fff',
+    borderBottomColor: "#fff",
     marginBottom: 20,
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
     paddingHorizontal: 10,
   },
   button: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#007bff',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#007bff",
     paddingVertical: 15,
     borderRadius: 5,
   },
   buttonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
     marginLeft: 10,
   },
