@@ -36,7 +36,7 @@ export function UserFormScreen() {
 
   return (
     <View style={styles.container}>
-      <SafeAreaView style={{ padding: 0 }} edges={["top"]}>
+      <SafeAreaView edges={["top"]}>
         <Header title="Novo Usuário" showBack />
       </SafeAreaView>
 

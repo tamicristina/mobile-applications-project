@@ -64,7 +64,6 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   item: {
-    backgroundColor: "#333",
     padding: 15,
     marginBottom: 10,
     borderRadius: 5,

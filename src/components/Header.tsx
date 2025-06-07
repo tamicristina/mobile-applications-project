@@ -33,20 +33,18 @@ const Header = ({
   return (
     <View style={styles.headerContainer}>
       {showBack && (
-        <SafeAreaView>
-          <TouchableOpacity
-            onPress={() => {
-              if (navigation.canGoBack()) {
-                navigation.goBack();
-              }
-            }}
-          >
-            <Feather name="arrow-left" size={24} color="#fff" />
-          </TouchableOpacity>
-        </SafeAreaView>
+        <TouchableOpacity
+          onPress={() => {
+            if (navigation.canGoBack()) {
+              navigation.goBack();
+            }
+          }}
+        >
+          <Feather name="arrow-left" size={24} color="#fff" />
+        </TouchableOpacity>
       )}
 
-      <Text style={[styles.title, showBack && { marginLeft: 10 }]}>
+      <Text style={[styles.title, showBack && { marginLeft: 20 }]}>
         {title}
       </Text>
 
@@ -72,8 +70,8 @@ const Header = ({
 
 const styles = StyleSheet.create({
   headerContainer: {
-    paddingTop: 30,
-    paddingBottom: 30,
+    paddingTop: 25,
+    paddingBottom: 25,
     paddingHorizontal: 20,
     backgroundColor: "#333",
     flexDirection: "row",

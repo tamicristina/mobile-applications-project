@@ -12,6 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import Header from "../components/Header";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types/navigation";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, "Login">;
 
@@ -30,7 +31,9 @@ export function LoginScreen() {
 
   return (
     <View style={styles.container}>
-      <Header title="Acesso" />
+      <SafeAreaView>
+        <Header title="Acesso" />
+      </SafeAreaView>
       <View style={styles.form}>
         <TextInput
           style={styles.input}
