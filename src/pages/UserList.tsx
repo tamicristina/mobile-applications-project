@@ -1,13 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
   FlatList,
-  TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import { Feather } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
 import Header from "../components/Header";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types/navigation";
@@ -15,13 +14,26 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, "UserList">;
 
-const users = [
-  { id: "1", name: "João Silva", username: "joao.silva" },
-  { id: "2", name: "Maria Oliveira", username: "maria.oliveira" },
-];
-
 export function UserListScreen() {
   const navigation = useNavigation<NavigationProp>();
+  const [users, setUsers] = useState<{ id: string; name: string; username: string }[]>([]);
+  const isFocused = useIsFocused();
+
+  const loadUsers = async () => {
+    try {
+      const storedUsers = await AsyncStorage.getItem("@users");
+      const parsed = storedUsers ? JSON.parse(storedUsers) : [];
+      setUsers(parsed);
+    } catch (error) {
+      console.error("Erro ao carregar usuários", error);
+    }
+  };
+
+  useEffect(() => {
+    if (isFocused) {
+      loadUsers();
+    }
+  }, [isFocused]);
 
   const renderItem = ({
     item,
@@ -67,6 +79,7 @@ const styles = StyleSheet.create({
     padding: 15,
     marginBottom: 10,
     borderRadius: 5,
+    backgroundColor: "#333",
   },
   name: {
     color: "#fff",
@@ -75,13 +88,5 @@ const styles = StyleSheet.create({
   username: {
     color: "#ccc",
     fontSize: 14,
-  },
-  logoutButton: {
-    position: "absolute",
-    bottom: 20,
-    left: 20,
-    backgroundColor: "#007bff",
-    padding: 15,
-    borderRadius: 50,
   },
 });
