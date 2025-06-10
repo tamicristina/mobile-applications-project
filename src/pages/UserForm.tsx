@@ -10,12 +10,14 @@ import {
   Platform,
   ScrollView,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import Header from "../components/Header";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types/navigation";
 import { SafeAreaView } from "react-native-safe-area-context";
+import uuid from "react-native-uuid";
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, "UserForm">;
 
@@ -26,11 +28,33 @@ export function UserFormScreen() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSave = () => {
-    if (name && login && password && confirmPassword) {
-      navigation.navigate("UserList");
-    } else {
+  const handleSave = async () => {
+    if (!name || !login || !password || !confirmPassword) {
       Alert.alert("Erro", "Todos os campos são obrigatórios.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      Alert.alert("Erro", "As senhas não coincidem.");
+      return;
+    }
+
+    try {
+      const newUser = {
+        id: uuid.v4().toString(),
+        name,
+        username: login,
+      };
+
+      const storedUsers = await AsyncStorage.getItem("@users");
+      const users = storedUsers ? JSON.parse(storedUsers) : [];
+
+      users.push(newUser);
+      await AsyncStorage.setItem("@users", JSON.stringify(users));
+
+      navigation.navigate("UserList");
+    } catch (error) {
+      Alert.alert("Erro", "Não foi possível salvar o usuário.");
     }
   };
 
